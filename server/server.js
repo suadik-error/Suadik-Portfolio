@@ -1,34 +1,59 @@
-const express = require("express")
-const cors = require("cors")
-const nodemailer = require("nodemailer")
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
+const nodemailer = require("nodemailer");
+const aiRoute = require("./AiRoute");
 
-const app = express()
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
-app.use(cors())
-app.use(express.json())
+const app = express();
+const port = process.env.PORT || 5000;
 
-app.post("/contact", async(req,res)=>{
+app.use(cors());
+app.use(express.json());
 
-const {name,email,message} = req.body
+app.use("/ai", aiRoute);
 
-const transporter = nodemailer.createTransport({
-service:"gmail",
-auth:{
-user:"yourgmail@gmail.com",
-pass:"app-password"
-}
-})
+app.post("/contact", async (req, res) => {
+  const { name, email, message } = req.body || {};
 
-await transporter.sendMail({
-from:email,
-to:"yourgmail@gmail.com",
-subject:"Portfolio Contact",
-text:message
-})
+  if (!name || !email || !message) {
+    return res.status(400).json({
+      error: "Name, email, and message are required.",
+    });
+  }
 
-res.send("Email sent")
-})
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    return res.status(503).json({
+      error: "Email credentials are not configured on the server.",
+    });
+  }
 
-app.listen(5000,()=>{
-console.log("Server running")
-})
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: email,
+      to: process.env.EMAIL_USER,
+      subject: `Portfolio Contact from ${name}`,
+      text: message,
+    });
+
+    return res.json({ message: "Email sent successfully." });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Failed to send email.",
+      details: error.message,
+    });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

@@ -13,8 +13,10 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
     "express": "^5.2.1",
     "nodemailer": "^8.0.3",
+    "openai": "^5.20.2",
     "react-globe.gl": "^2.37.0",
     "three": "^0.183.2"
   }
