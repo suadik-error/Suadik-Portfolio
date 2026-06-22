@@ -1,26 +1,47 @@
-const commands = [
-  "$ profile --summary",
-  "Computer Science student and MERN stack developer",
-  "$ role --current",
-  "Web Developer and Graphic Designer at Intime Innovation Enterprise",
-  "$ target --next",
-  "Internship and junior developer opportunities",
-];
+import { useState } from "react"
 
-export default function Terminal() {
-  return (
-    <section className="utility-card utility-card--terminal" aria-label="Developer terminal">
-      <div className="utility-card__header">
-        <span />
-        <span />
-        <span />
-      </div>
+export default function Terminal(){
 
-      <div className="terminal-lines">
-        {commands.map((line) => (
-          <p key={line}>{line}</p>
-        ))}
-      </div>
-    </section>
-  );
+const [input,setInput]=useState("")
+const [history,setHistory]=useState([])
+
+const commands={
+whoami:"Full Stack MERN Developer",
+skills:"HTML CSS JavaScript React Node MongoDB",
+projects:"E-commerce platform, Media Upload App",
+contact:"Email: your@email.com"
+}
+
+const handleCommand=(e)=>{
+
+if(e.key==="Enter"){
+
+const result = commands[input] || "Command not found"
+
+setHistory([...history,`> ${input}`,result])
+
+setInput("")
+}
+
+}
+
+return(
+
+<div className="bg-black text-green-400 p-6 font-mono h-screen">
+
+{history.map((line,i)=>(
+<p key={i}>{line}</p>
+))}
+
+<input
+className="bg-black outline-none"
+value={input}
+onChange={e=>setInput(e.target.value)}
+onKeyDown={handleCommand}
+/>
+
+</div>
+
+)
+
 }

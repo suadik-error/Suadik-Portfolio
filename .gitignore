@@ -13,7 +13,10 @@ dist-ssr
 *.local
 .env
 .env.*
-!.env.example
+!.env.
+.tmp-chrome-desktop
+.tmp-chrome-dump-chrome
+.tmp-edge-desktop
 
 # Editor directories and files
 .vscode/*
