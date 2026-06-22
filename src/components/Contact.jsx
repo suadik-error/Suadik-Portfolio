@@ -5,7 +5,7 @@ export default function Contact() {
         <p className="eyebrow">Contact</p>
         <h2>Need a frontend refresh or a full stack build? Let's make the scope concrete.</h2>
         <p className="muted">
-          Based in Ghana and available for internship, junior developer, and selected freelance opportunities.
+          Based in Ghana and available for junior developer, and selected freelance opportunities.
         </p>
       </div>
 

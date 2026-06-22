@@ -147,8 +147,8 @@ const contactLinks = [
   },
   {
     label: "GitHub",
-    value: "github.com/suadikhussein",
-    href: "https://github.com/suadikhussein",
+    value: "github.com/suadik-error",
+    href: "https://github.com/suadik-error",
   },
   {
     label: "Portfolio",
@@ -308,7 +308,7 @@ function ServicesPage() {
       <div className="capability-panel">
         <div>
           <p className="eyebrow">Capabilities</p>
-          <h2>Technical skills from the CV</h2>
+          <h2>Technical skills</h2>
         </div>
         <div className="skill-grid">
           {skillGroups.map((group) => (
